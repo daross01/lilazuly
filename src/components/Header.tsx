@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
+import StarIcon from "@/components/StarIcon";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);

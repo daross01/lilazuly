@@ -1,21 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ColorGroupCard from "@/components/ColorGroupCard";
 import ColorGroupSlider from "@/components/ColorGroupSlider";
 import CollectionCard from "@/components/CollectionCard";
 import SocialShareButtons from "@/components/SocialShareButtons";
 import AdSlot from "@/components/AdSlot";
+import ImageModal from "@/components/ImageModal";
 import { Button } from "@/components/ui/button";
-import { getCollectionBySlug, collections } from "@/data/collections";
+import { X } from "lucide-react";
+import { getCollectionBySlug, collections, type ColorGroup } from "@/data/collections";
 
 const CollectionPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
   const collection = getCollectionBySlug(slug || "");
+  const [activeColorGroup, setActiveColorGroup] = useState<ColorGroup | null>(null);
 
-  // Scroll to hash on load
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace("#", "");
@@ -92,7 +95,7 @@ const CollectionPage = () => {
           <AdSlot location="collection-top" />
         </div>
 
-        {/* Subcollections → SubSubcollections → Color groups */}
+        {/* Subcollections → SubSubcollections → Color group cards */}
         <section className="py-8">
           <div className="container space-y-12">
             {collection.subcollections.map((sub) => (
@@ -102,21 +105,16 @@ const CollectionPage = () => {
                 <div className="space-y-8">
                   {sub.subsubcollections.map((subsub) => (
                     <div key={subsub.id} id={subsub.anchorId} className="scroll-mt-20">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-base md:text-lg font-semibold text-foreground">{subsub.title}</h3>
-                        <Button variant="lavender" size="sm" asChild>
-                          <a href={subsub.downloadLink} target="_blank" rel="noopener noreferrer">
-                            Download Full Collection
-                          </a>
-                        </Button>
-                      </div>
+                      <h3 className="text-base md:text-lg font-semibold text-foreground mb-4">{subsub.title}</h3>
 
-                      {/* Horizontal scrollable row of 6 color groups */}
+                      {/* Horizontal scrollable row of color group cards */}
                       <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2">
                         {subsub.colorGroups.map((colorGroup) => (
-                          <div key={colorGroup.id} className="flex-shrink-0 w-64 md:w-72 snap-start">
-                            <h4 className="text-sm font-medium text-muted-foreground mb-2">{colorGroup.title}</h4>
-                            <ColorGroupSlider colorGroup={colorGroup} pageUrl={pageUrl} />
+                          <div key={colorGroup.id} className="flex-shrink-0 w-44 md:w-48 snap-start">
+                            <ColorGroupCard
+                              colorGroup={colorGroup}
+                              onClick={() => setActiveColorGroup(colorGroup)}
+                            />
                           </div>
                         ))}
                       </div>
@@ -127,6 +125,27 @@ const CollectionPage = () => {
             ))}
           </div>
         </section>
+
+        {/* Expanded slider overlay when a color group card is clicked */}
+        {activeColorGroup && (
+          <div className="fixed inset-0 z-50 bg-foreground/50 backdrop-blur-sm animate-fade-in flex items-end md:items-center justify-center p-4">
+            <div className="bg-background rounded-2xl shadow-soft w-full max-w-3xl max-h-[85vh] overflow-auto">
+              <div className="flex items-center justify-between p-4 border-b border-border sticky top-0 bg-background z-10">
+                <h3 className="font-semibold text-foreground">{activeColorGroup.title}</h3>
+                <button
+                  onClick={() => setActiveColorGroup(null)}
+                  className="p-1.5 rounded-full hover:bg-secondary transition-colors"
+                  aria-label="Close"
+                >
+                  <X size={18} className="text-foreground" />
+                </button>
+              </div>
+              <div className="p-4">
+                <ColorGroupSlider colorGroup={activeColorGroup} pageUrl={pageUrl} />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Other collections */}
         {otherCollections.length > 0 && (
