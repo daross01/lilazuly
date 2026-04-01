@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
-            <p className="font-semibold text-foreground">✨ Lilazuly</p>
+            <p className="font-semibold text-foreground flex items-center gap-1.5 justify-center md:justify-start"><StarIcon size={16} className="text-primary" /> Lilazuly</p>
             <p className="text-sm text-muted-foreground mt-1">Free aesthetic wallpapers for your phone.</p>
           </div>
 
