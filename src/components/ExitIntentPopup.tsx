@@ -78,7 +78,7 @@ const ExitIntentPopup = () => {
                 className="px-4 py-3 rounded-full bg-muted border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               />
               <Button variant="hero" type="submit" size="lg">
-                Send Me The Pack ✨
+                Send Me The Pack
               </Button>
             </form>
           </>
