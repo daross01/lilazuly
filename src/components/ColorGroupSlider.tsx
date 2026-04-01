@@ -1,29 +1,26 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import type { Subcollection } from "@/data/collections";
+import type { ColorGroup } from "@/data/collections";
 
 const DOMAIN = "https://lilazuly.vercel.app";
+const BATCH_SIZE = 10;
 
-interface SubcollectionSliderProps {
-  subcollection: Subcollection;
-  collectionTitle?: string;
+interface ColorGroupSliderProps {
+  colorGroup: ColorGroup;
   pageUrl?: string;
 }
 
-const BATCH_SIZE = 10;
-
-const SubcollectionSlider = ({ subcollection, collectionTitle = "", pageUrl = "" }: SubcollectionSliderProps) => {
+const ColorGroupSlider = ({ colorGroup, pageUrl = "" }: ColorGroupSliderProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(BATCH_SIZE);
 
-  const visibleImages = subcollection.images.slice(0, visible);
-  const hasMore = visible < subcollection.images.length;
+  const visibleImages = colorGroup.images.slice(0, visible);
+  const hasMore = visible < colorGroup.images.length;
 
   const loadMore = useCallback(() => {
-    setVisible((v) => Math.min(v + BATCH_SIZE, subcollection.images.length));
-  }, [subcollection.images.length]);
+    setVisible((v) => Math.min(v + BATCH_SIZE, colorGroup.images.length));
+  }, [colorGroup.images.length]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -57,18 +54,7 @@ const SubcollectionSlider = ({ subcollection, collectionTitle = "", pageUrl = ""
   };
 
   return (
-    <div id={subcollection.anchorId} className="py-6 scroll-mt-20">
-      <div className="flex items-center justify-between mb-4">
-        <a href={`#${subcollection.anchorId}`} className="hover:underline">
-          <h3 className="text-base md:text-lg font-semibold text-foreground">{subcollection.title}</h3>
-        </a>
-        <Button variant="lavender" size="sm" asChild>
-          <a href={subcollection.downloadLink} target="_blank" rel="noopener noreferrer">
-            Download Full Collection
-          </a>
-        </Button>
-      </div>
-
+    <div id={colorGroup.anchorId} className="scroll-mt-20">
       <div className="relative group">
         <button
           onClick={() => scroll("left")}
@@ -132,4 +118,4 @@ const SubcollectionSlider = ({ subcollection, collectionTitle = "", pageUrl = ""
   );
 };
 
-export default SubcollectionSlider;
+export default ColorGroupSlider;
