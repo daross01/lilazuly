@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import StarIcon from "@/components/StarIcon";
 
 const Footer = () => {
   return (
