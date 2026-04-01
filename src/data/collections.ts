@@ -204,3 +204,14 @@ export const collections = data.collections;
 
 export const getCollectionBySlug = (slug: string) =>
   collections.find((c) => c.slug === slug);
+
+export const getSubSubcollectionBySlug = (slug: string): SubSubcollection | undefined => {
+  for (const col of collections) {
+    for (const sub of col.subcollections) {
+      for (const subsub of sub.subsubcollections) {
+        if (subsub.slug === slug) return subsub;
+      }
+    }
+  }
+  return undefined;
+};
