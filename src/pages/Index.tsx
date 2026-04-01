@@ -2,11 +2,11 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import CategorySection from "@/components/CategorySection";
+import CollectionCard from "@/components/CollectionCard";
 import EmailSignup from "@/components/EmailSignup";
 import AdSlot from "@/components/AdSlot";
 
-import { categories, getCollectionsByCategory } from "@/data/collections";
+import { collections } from "@/data/collections";
 
 const DOMAIN = "https://lilazuly.vercel.app";
 
@@ -22,18 +22,22 @@ const Index = () => {
       <main className="flex-1">
         <HeroSection />
 
-        <div id="categories">
-          {categories.map((category) => {
-            const cols = getCollectionsByCategory(category.id);
-            return (
-              <CategorySection
-                key={category.id}
-                title={category.title}
-                collections={cols}
-              />
-            );
-          })}
-        </div>
+        <section className="py-12">
+          <div className="container">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-6">Collections</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {collections.map((collection) => (
+                <CollectionCard
+                  key={collection.id}
+                  slug={collection.slug}
+                  title={collection.title}
+                  subtitle={collection.subtitle}
+                  previewImages={collection.previewImages}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
 
         <div className="container py-4">
           <AdSlot location="homepage" />
@@ -53,7 +57,6 @@ const Index = () => {
         </section>
       </main>
       <Footer />
-      
     </div>
   );
 };
