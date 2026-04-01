@@ -17,8 +17,9 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xl font-semibold tracking-tight text-foreground">
-          ✨ Lilazuly
+        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xl font-semibold tracking-tight text-foreground flex items-center gap-1.5">
+          <StarIcon size={20} className="text-primary" />
+          Lilazuly
         </Link>
 
         {/* Desktop nav */}
