@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import CollectionCard from "@/components/CollectionCard";
+import ColorGroupCard from "@/components/ColorGroupCard";
 import EmailSignup from "@/components/EmailSignup";
 import AdSlot from "@/components/AdSlot";
 
@@ -11,6 +12,9 @@ import { collections } from "@/data/collections";
 const DOMAIN = "https://lilazuly.vercel.app";
 
 const Index = () => {
+  // Use the first (and currently only) collection
+  const collection = collections[0];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
@@ -22,22 +26,36 @@ const Index = () => {
       <main className="flex-1">
         <HeroSection />
 
-        <section className="py-12">
-          <div className="container">
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-6">Collections</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {collections.map((collection) => (
-                <CollectionCard
-                  key={collection.id}
-                  slug={collection.slug}
-                  title={collection.title}
-                  subtitle={collection.subtitle}
-                  previewImages={collection.previewImages}
-                />
+        {collection && (
+          <section className="py-12">
+            <div className="container space-y-12">
+              {collection.subcollections.map((sub) => (
+                <div key={sub.id} id={sub.anchorId} className="scroll-mt-20">
+                  <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">{sub.title}</h2>
+
+                  <div className="space-y-8">
+                    {sub.subsubcollections.map((subsub) => (
+                      <div key={subsub.id} id={subsub.anchorId} className="scroll-mt-20">
+                        <h3 className="text-base md:text-lg font-semibold text-foreground mb-4">{subsub.title}</h3>
+
+                        {/* Horizontal scrollable row of color group cards */}
+                        <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2">
+                          {subsub.colorGroups.map((colorGroup) => (
+                            <div key={colorGroup.id} className="flex-shrink-0 w-44 md:w-48 snap-start">
+                              <Link to={`/collection/${subsub.slug}#${colorGroup.anchorId}`}>
+                                <ColorGroupCard colorGroup={colorGroup} />
+                              </Link>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <div className="container py-4">
           <AdSlot location="homepage" />
