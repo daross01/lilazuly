@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Analytics } from '@vercel/analytics/react';
 import Index from "./pages/Index";
-import CollectionPage from "./pages/CollectionPage";
+import SubSubcollectionPage from "./pages/SubSubcollectionPage";
 import CategoryPage from "./pages/CategoryPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
@@ -23,7 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/collection/:slug" element={<CollectionPage />} />
+          <Route path="/collection/:slug" element={<SubSubcollectionPage />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />

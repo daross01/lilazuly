@@ -66,8 +66,10 @@ export interface ColorGroup {
 /** A sub-subcollection (e.g. "color_pop") containing 6 color groups */
 export interface SubSubcollection {
   id: string;
+  slug: string;
   anchorId: string;
   title: string;
+  collectionTitle: string;
   colorGroups: ColorGroup[];
   downloadLink: string;
 }
@@ -160,10 +162,13 @@ function buildData() {
           });
         }
 
+        const subsubSlug = `${toSlug(colName)}-${toSlug(subSubName)}`;
         subsubcollections.push({
           id: `${toSlug(colName)}-${toSlug(subName)}-${toSlug(subSubName)}`,
+          slug: subsubSlug,
           anchorId: `${toSlug(subName)}-${toSlug(subSubName)}`,
           title: formatTitle(subSubName),
+          collectionTitle: formatTitle(colName),
           colorGroups,
           downloadLink: "https://daross.gumroad.com/l/glow-wallpapers-all-collections",
         });
@@ -199,3 +204,14 @@ export const collections = data.collections;
 
 export const getCollectionBySlug = (slug: string) =>
   collections.find((c) => c.slug === slug);
+
+export const getSubSubcollectionBySlug = (slug: string): SubSubcollection | undefined => {
+  for (const col of collections) {
+    for (const sub of col.subcollections) {
+      for (const subsub of sub.subsubcollections) {
+        if (subsub.slug === slug) return subsub;
+      }
+    }
+  }
+  return undefined;
+};

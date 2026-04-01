@@ -22,9 +22,9 @@ const ColorGroupCard = ({ colorGroup, onClick }: ColorGroupCardProps) => {
   );
 
   return (
-    <button
+    <div
       onClick={onClick}
-      className="group block rounded-2xl overflow-hidden bg-card shadow-card hover:shadow-card-hover transition-all duration-300 text-left w-full"
+      className="group block rounded-2xl overflow-hidden bg-card shadow-card hover:shadow-card-hover transition-all duration-300 text-left w-full cursor-pointer"
     >
       {/* 2x2 image collage */}
       <div className="grid grid-cols-2 gap-0.5 overflow-hidden">
@@ -49,7 +49,7 @@ const ColorGroupCard = ({ colorGroup, onClick }: ColorGroupCardProps) => {
           {colorGroup.images.length} wallpapers
         </p>
       </div>
-    </button>
+    </div>
   );
 };
 
