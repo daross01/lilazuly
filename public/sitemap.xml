@@ -1,44 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://delunevibes.vercel.app/</loc>
-    <lastmod>2026-03-25</lastmod>
+    <loc>https://lilazuly.vercel.app/</loc>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://delunevibes.vercel.app/privacy</loc>
-    <lastmod>2026-03-25</lastmod>
+    <loc>https://lilazuly.vercel.app/privacy</loc>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://delunevibes.vercel.app/terms</loc>
-    <lastmod>2026-03-25</lastmod>
+    <loc>https://lilazuly.vercel.app/terms</loc>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://delunevibes.vercel.app/collection/nyra-collection-color-pop</loc>
-    <lastmod>2026-03-25</lastmod>
+    <loc>https://lilazuly.vercel.app/collection/ballon-initial-gradient</loc>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://delunevibes.vercel.app/collection/nyra-collection-heart-glow</loc>
-    <lastmod>2026-03-25</lastmod>
+    <loc>https://lilazuly.vercel.app/collection/ballon-initial-solid</loc>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://delunevibes.vercel.app/collection/nyra-collection-pure-initial</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://delunevibes.vercel.app/collection/nyra-collection-soft-love</loc>
-    <lastmod>2026-03-25</lastmod>
+    <loc>https://lilazuly.vercel.app/collection/ballon-initial-white</loc>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

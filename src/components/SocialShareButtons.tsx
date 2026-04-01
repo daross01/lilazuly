@@ -7,7 +7,7 @@ interface SocialShareButtonsProps {
   image?: string;
 }
 
-const DOMAIN = "https://delunevibes.vercel.app";
+const DOMAIN = "https://lilazuly.vercel.app";
 
 const SocialShareButtons = ({ url, title, description, image }: SocialShareButtonsProps) => {
   const fullUrl = encodeURIComponent(url);

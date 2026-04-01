@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
           <div className="mt-6 space-y-4 text-sm text-muted-foreground leading-relaxed">
             <p>Last updated: February 2026</p>
             <p>
-              At DeluneVibes, we value your privacy. This policy explains what information we collect,
+              At Lilazuly, we value your privacy. This policy explains what information we collect,
               how we use it, and what choices you have.
             </p>
             <h2 className="text-lg font-semibold text-foreground pt-4">Information We Collect</h2>
@@ -30,7 +30,7 @@ const PrivacyPolicy = () => {
             </p>
             <h2 className="text-lg font-semibold text-foreground pt-4">Contact</h2>
             <p>
-              If you have questions about this policy, please contact us at hello@delunevibes.com.
+              If you have questions about this policy, please contact us at hello@lilazuly.com.
             </p>
           </div>
         </article>

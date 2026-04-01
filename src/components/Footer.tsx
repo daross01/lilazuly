@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
-            <p className="font-semibold text-foreground flex items-center gap-2"><img src="/favicon.svg" alt="DeluneVibes logo" className="w-5 h-5 inline" /> DeluneVibes</p>
+            <p className="font-semibold text-foreground">✨ Lilazuly</p>
             <p className="text-sm text-muted-foreground mt-1">Free aesthetic wallpapers for your phone.</p>
           </div>
 
@@ -15,7 +15,7 @@ const Footer = () => {
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <a href="mailto:darosscontact@gmail.com" className="hover:text-foreground transition-colors">Contact</a>
             <a
-              href="https://es.pinterest.com/delunevibes/"
+              href="https://es.pinterest.com/lilazuly___"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-foreground transition-colors"
@@ -26,7 +26,7 @@ const Footer = () => {
         </div>
 
         <div className="text-center mt-8 text-xs text-muted-foreground">
-          © {new Date().getFullYear()} DeluneVibes. All rights reserved.
+          © {new Date().getFullYear()} Lilazuly. All rights reserved.
         </div>
       </div>
     </footer>

@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CollectionCard from "@/components/CollectionCard";
 import { categories, getCollectionsByCategory, getCategoryById } from "@/data/collections";
 
-const DOMAIN = "https://delunevibes.vercel.app";
+const DOMAIN = "https://lilazuly.vercel.app";
 
 const CategoryPage = () => {
   const { slug } = useParams<{ slug: string }>();

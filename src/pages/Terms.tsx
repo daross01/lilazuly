@@ -11,7 +11,7 @@ const Terms = () => {
           <div className="mt-6 space-y-4 text-sm text-muted-foreground leading-relaxed">
             <p>Last updated: February 2026</p>
             <p>
-              By using DeluneVibes, you agree to the following terms. Please read them carefully.
+              By using Lilazuly, you agree to the following terms. Please read them carefully.
             </p>
             <h2 className="text-lg font-semibold text-foreground pt-4">Use of Wallpapers</h2>
             <p>
@@ -21,16 +21,16 @@ const Terms = () => {
             <h2 className="text-lg font-semibold text-foreground pt-4">Intellectual Property</h2>
             <p>
               All content on this site, including images, text, and design, is the property of
-              DeluneVibes and protected by copyright laws.
+              Lilazuly and protected by copyright laws.
             </p>
             <h2 className="text-lg font-semibold text-foreground pt-4">Limitation of Liability</h2>
             <p>
-              DeluneVibes is provided "as is." We are not liable for any damages arising
+              Lilazuly is provided "as is." We are not liable for any damages arising
               from your use of this website or its content.
             </p>
             <h2 className="text-lg font-semibold text-foreground pt-4">Contact</h2>
             <p>
-              For questions regarding these terms, please contact us at hello@delunevibes.com.
+              For questions regarding these terms, please contact us at hello@lilazuly.com.
             </p>
           </div>
         </article>

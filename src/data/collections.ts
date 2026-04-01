@@ -4,6 +4,8 @@ const imageModules = import.meta.glob<string>(
   { eager: true, import: "default" }
 );
 
+// Parse all image paths into a structured map
+// Path format: /src/assets/imagenes/{theme}/{collection}/{subcollection}/{filename}
 interface ParsedImage {
   theme: string;
   collection: string;
@@ -29,24 +31,19 @@ function parseImagePaths(): ParsedImage[] {
   return images;
 }
 
+// Natural sort for filenames with numbers (imagen1, imagen2, ..., imagen10, etc.)
 function naturalSort(a: string, b: string): number {
   return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
 }
 
+// Format folder name into readable title: "gradient_amarillo" → "Gradient Amarillo"
 function formatTitle(folderName: string): string {
   return folderName
     .replace(/[-_]/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function formatCollectionTitle(folderName: string): string {
-  return `${formatTitle(folderName)} Collection`;
-}
-
-function formatCategoryTitle(folderName: string): string {
-  return `${formatTitle(folderName)} Collection`;
-}
-
+// Generate a URL-friendly slug from folder name
 function toSlug(name: string): string {
   return name.replace(/_/g, "-").toLowerCase();
 }
@@ -82,34 +79,11 @@ export interface Category {
   slug: string;
 }
 
-export interface ColorConfig {
-  id: string;
-  name: string;
-}
-
-export const COLOR_ORDER: ColorConfig[] = [
-  { id: "lake", name: "Lake" },
-  { id: "ocean", name: "Ocean" },
-  { id: "salvia", name: "Salvia" },
-  { id: "malva", name: "Malva" },
-  { id: "coral", name: "Coral" },
-  { id: "terracotta", name: "Terracotta" },
-  { id: "taupe", name: "Taupe" },
-  { id: "ash", name: "Ash" },
-  { id: "marfil", name: "Marfil" },
-];
-
-// Fixed collection display order
-const COLLECTION_ORDER = [
-  "color-pop",
-  "heart-glow",
-  "soft-love",
-  "pure-initial",
-];
-
+// --- Build data from folder structure ---
 function buildData() {
   const parsed = parseImagePaths();
 
+  // Group: theme → collection → subcollection → images
   const themeMap = new Map<string, Map<string, Map<string, ParsedImage[]>>>();
 
   for (const img of parsed) {
@@ -124,30 +98,19 @@ function buildData() {
   const categories: Category[] = [];
   const collections: Collection[] = [];
 
+  // Sort theme names for consistent order
   const themeNames = [...themeMap.keys()].sort();
 
   for (const themeName of themeNames) {
     const categoryId = toSlug(themeName);
     categories.push({
       id: categoryId,
-      title: formatCategoryTitle(themeName),
+      title: formatTitle(themeName),
       slug: categoryId,
     });
 
     const colMap = themeMap.get(themeName)!;
-    const collectionNames = [...colMap.keys()];
-
-    // Sort collections by COLLECTION_ORDER
-    collectionNames.sort((a, b) => {
-      const aSlug = toSlug(a);
-      const bSlug = toSlug(b);
-      const aIdx = COLLECTION_ORDER.indexOf(aSlug);
-      const bIdx = COLLECTION_ORDER.indexOf(bSlug);
-      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
-      if (aIdx === -1) return 1;
-      if (bIdx === -1) return -1;
-      return aIdx - bIdx;
-    });
+    const collectionNames = [...colMap.keys()].sort();
 
     for (const colName of collectionNames) {
       const subMap = colMap.get(colName)!;
@@ -174,7 +137,9 @@ function buildData() {
         });
       }
 
+      // Preview pool: collect todos los fondos y elige aleatoriamente en el componente (cartas)
       const previewImages: string[] = subcollections.flatMap((sub) => sub.images.map((img) => img.src));
+
       const collectionSlug = `${categoryId}-${toSlug(colName)}`;
 
       collections.push({
@@ -182,7 +147,7 @@ function buildData() {
         slug: collectionSlug,
         title: formatTitle(colName),
         subtitle: `${totalImages} wallpapers`,
-        description: `Explore our ${formatTitle(colName).toLowerCase()} wallpapers in HD and 4K resolution. These aesthetic DeluneVibes wallpapers are perfect for iPhone, Android and desktop screens. Download them for free and give your device a clean minimal look. ${totalImages} high quality wallpapers available.`,
+        description: `Explore our collection of ${formatTitle(colName).toLowerCase()} wallpapers in HD and 4K resolution. These aesthetic lilazuly wallpapers are perfect for iPhone, Android and desktop screens. Download them for free and give your device a clean minimal look. ${totalImages} high quality wallpapers available.`,
         categoryId,
         previewImages,
         subcollections,

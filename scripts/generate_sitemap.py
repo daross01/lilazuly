@@ -1,29 +1,41 @@
 """
 Generates public/sitemap.xml from the folder structure in src/assets/wallpapers/.
 
+Parses folder structure and builds URLs for:
+  - Homepage
+  - Each collection page: /collection/{slug}
+  - Each subcollection anchor: /collection/{slug}#{anchor}
+
 Usage:
     python scripts/generate_sitemap.py
+
+Configuration:
+    Set DOMAIN below to your production domain.
 """
 
 import os
+import re
 from datetime import date
 
-DOMAIN = "https://delunevibes.vercel.app"
+DOMAIN = "https://lilazuly.vercel.app"
 WALLPAPERS_DIR = "src/assets/wallpapers"
 OUTPUT = "public/sitemap.xml"
 
 
 def to_slug(name: str) -> str:
+    """Generate a URL-friendly slug from folder name"""
     return name.replace("_", "-").lower()
 
 
 def parse_wallpapers_structure(root_dir: str):
+    """Extract collection slugs and subcollection anchor IDs from folder structure."""
     slugs = []
     anchors = set()
 
     if not os.path.exists(root_dir):
         return slugs, list(anchors)
 
+    # Walk through the directory structure
     for theme_dir in os.listdir(root_dir):
         theme_path = os.path.join(root_dir, theme_dir)
         if not os.path.isdir(theme_path):
@@ -39,6 +51,7 @@ def parse_wallpapers_structure(root_dir: str):
             collection_slug = f"{theme_slug}-{to_slug(collection_dir)}"
             slugs.append(collection_slug)
 
+            # Get subcollection anchors
             for subcollection_dir in os.listdir(collection_path):
                 subcollection_path = os.path.join(collection_path, subcollection_dir)
                 if os.path.isdir(subcollection_path):
@@ -49,8 +62,10 @@ def parse_wallpapers_structure(root_dir: str):
 
 def generate_sitemap(slugs: list, anchors: list):
     today = date.today().isoformat()
+
     urls = []
 
+    # Homepage
     urls.append(f"""  <url>
     <loc>{DOMAIN}/</loc>
     <lastmod>{today}</lastmod>
@@ -58,6 +73,7 @@ def generate_sitemap(slugs: list, anchors: list):
     <priority>1.0</priority>
   </url>""")
 
+    # Static pages
     for page in ["privacy", "terms"]:
         urls.append(f"""  <url>
     <loc>{DOMAIN}/{page}</loc>
@@ -66,6 +82,7 @@ def generate_sitemap(slugs: list, anchors: list):
     <priority>0.3</priority>
   </url>""")
 
+    # Collection pages
     for slug in sorted(slugs):
         urls.append(f"""  <url>
     <loc>{DOMAIN}/collection/{slug}</loc>

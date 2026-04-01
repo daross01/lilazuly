@@ -17,9 +17,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
-          <img src="/favicon.svg" alt="DeluneVibes logo" className="w-5 h-5" />
-          DeluneVibes
+        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xl font-semibold tracking-tight text-foreground">
+          ✨ Lilazuly
         </Link>
 
         {/* Desktop nav */}

@@ -13,7 +13,7 @@ const EmailSignup = () => {
 
         <div className="mt-6 flex justify-center">
           <Button variant="hero" size="lg" asChild>
-            <a href="https://daross.gumroad.com/l/delunevibes_nyracollection" target="_blank" rel="noopener noreferrer">
+            <a href="https://daross.gumroad.com/l/glow-wallpapers-all-collections" target="_blank" rel="noopener noreferrer">
               Get Free Pack
             </a>
           </Button>

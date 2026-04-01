@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Subcollection } from "@/data/collections";
 
-const DOMAIN = "https://delunevibes.vercel.app";
+const DOMAIN = "https://lilazuly.vercel.app";
 
 interface SubcollectionSliderProps {
   subcollection: Subcollection;
@@ -62,7 +62,7 @@ const SubcollectionSlider = ({ subcollection, collectionTitle = "", pageUrl = ""
         <a href={`#${subcollection.anchorId}`} className="hover:underline">
           <h3 className="text-base md:text-lg font-semibold text-foreground">{subcollection.title}</h3>
         </a>
-        <Button variant="brand" size="sm" asChild>
+        <Button variant="lavender" size="sm" asChild>
           <a href={subcollection.downloadLink} target="_blank" rel="noopener noreferrer">
             Download Full Collection
           </a>

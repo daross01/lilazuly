@@ -50,8 +50,8 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        brand: "hsl(var(--brand))",
-        "brand-dark": "hsl(var(--brand-dark))",
+        lavender: "hsl(var(--lavender))",
+        "lavender-dark": "hsl(var(--lavender-dark))",
         beige: "hsl(var(--beige))",
         "beige-dark": "hsl(var(--beige-dark))",
         sidebar: {
