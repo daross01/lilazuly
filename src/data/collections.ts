@@ -66,8 +66,10 @@ export interface ColorGroup {
 /** A sub-subcollection (e.g. "color_pop") containing 6 color groups */
 export interface SubSubcollection {
   id: string;
+  slug: string;
   anchorId: string;
   title: string;
+  collectionTitle: string;
   colorGroups: ColorGroup[];
   downloadLink: string;
 }
