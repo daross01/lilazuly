@@ -162,10 +162,13 @@ function buildData() {
           });
         }
 
+        const subsubSlug = `${toSlug(colName)}-${toSlug(subSubName)}`;
         subsubcollections.push({
           id: `${toSlug(colName)}-${toSlug(subName)}-${toSlug(subSubName)}`,
+          slug: subsubSlug,
           anchorId: `${toSlug(subName)}-${toSlug(subSubName)}`,
           title: formatTitle(subSubName),
+          collectionTitle: formatTitle(colName),
           colorGroups,
           downloadLink: "https://daross.gumroad.com/l/glow-wallpapers-all-collections",
         });
