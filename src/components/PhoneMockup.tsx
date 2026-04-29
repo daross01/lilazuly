@@ -16,8 +16,8 @@ interface PhoneMockupProps {
 const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: PhoneMockupProps) => {
   return (
     <div className={`relative aspect-[9/16] ${className}`}>
-      {/* Screenshot */}
-      <div className="absolute inset-[3.5%] overflow-hidden rounded-[8%]">
+      {/* Screenshot — inset matches the frame bezel thickness */}
+      <div className="absolute inset-x-[2.5%] inset-y-[1.5%] overflow-hidden rounded-[10%/6%]">
         <img
           src={src}
           alt={alt}
@@ -28,14 +28,14 @@ const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: Phone
         />
       </div>
 
-      {/* iPhone frame overlay */}
+      {/* iPhone frame overlay — stretched to fill the 9:16 container */}
       <img
         src={iphoneFrame}
         alt=""
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
       />
 
       {topRightSlot && (
