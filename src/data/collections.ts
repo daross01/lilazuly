@@ -1,10 +1,9 @@
-// Auto-discover all images from the folder structure using Vite's import.meta.glob
-const imageModules = import.meta.glob<string>(
-  "/src/assets/wallpapers/**/*.{webp,jpg,jpeg,png,gif}",
-  { eager: true, import: "default" }
-);
+// Wallpapers are served as static files from /public/wallpapers.
+// A build-time script (scripts/generate_wallpapers_manifest.mjs) scans the
+// folder and emits this JSON. This avoids Vite's vite:asset plugin processing
+// hundreds of large images on every build.
+import manifest from "./wallpapers-manifest.json";
 
-// Path format: /src/assets/wallpapers/{collection}/{subcollection}/{subsubcollection}/{color}/{filename}
 interface ParsedImage {
   collection: string;
   subcollection: string;
@@ -15,21 +14,7 @@ interface ParsedImage {
 }
 
 function parseImagePaths(): ParsedImage[] {
-  const images: ParsedImage[] = [];
-  for (const [path, src] of Object.entries(imageModules)) {
-    const parts = path.replace("/src/assets/wallpapers/", "").split("/");
-    if (parts.length === 5) {
-      images.push({
-        collection: parts[0],
-        subcollection: parts[1],
-        subsubcollection: parts[2],
-        color: parts[3],
-        filename: parts[4],
-        src,
-      });
-    }
-  }
-  return images;
+  return manifest as ParsedImage[];
 }
 
 // Natural sort for filenames with numbers
