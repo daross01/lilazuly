@@ -11,13 +11,25 @@ interface PhoneMockupProps {
 
 /**
  * Renders a screenshot inside a transparent iPhone frame overlay.
- * The frame uses pointer-events-none so it never blocks interactions.
+ * Insets and aspect ratio are calibrated to the actual frame asset
+ * (573x1167, inner screen at L5.93% R5.76% T8.14% B2.83%).
  */
 const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: PhoneMockupProps) => {
   return (
-    <div className={`relative aspect-[9/16] ${className}`}>
-      {/* Screenshot — inset matches the frame bezel thickness */}
-      <div className="absolute inset-x-[2.5%] inset-y-[1.5%] overflow-hidden rounded-[10%/6%]">
+    <div
+      className={`relative w-full ${className}`}
+      style={{ aspectRatio: "573 / 1167" }}
+    >
+      {/* Screenshot — positioned exactly inside the frame's screen area */}
+      <div
+        className="absolute overflow-hidden rounded-[12%/5.5%]"
+        style={{
+          left: "5.93%",
+          right: "5.76%",
+          top: "8.14%",
+          bottom: "2.83%",
+        }}
+      >
         <img
           src={src}
           alt={alt}
@@ -28,14 +40,14 @@ const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: Phone
         />
       </div>
 
-      {/* iPhone frame overlay — stretched to fill the 9:16 container */}
+      {/* iPhone frame overlay */}
       <img
         src={iphoneFrame}
         alt=""
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full pointer-events-none select-none"
       />
 
       {topRightSlot && (
