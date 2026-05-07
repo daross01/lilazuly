@@ -100,3 +100,11 @@
     display: none;
   }
 }
+@layer utilities {
+  .wallpaper-protected {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}

@@ -4,15 +4,16 @@ interface PhoneMockupProps {
   src: string;
   alt: string;
   className?: string;
-  imgProps?: React.ImgHTMLAttributes<HTMLImageElement>;
+  /** Extra attributes applied to the wallpaper background div (e.g. data-pin-*) */
+  imgProps?: React.HTMLAttributes<HTMLDivElement> & Record<`data-${string}`, string | number | boolean>;
   /** Slot rendered on top-right of the mockup (e.g. share button) */
   topRightSlot?: React.ReactNode;
 }
 
 /**
- * Renders a screenshot inside a transparent iPhone frame overlay.
- * Insets and aspect ratio are calibrated to the actual frame asset
- * (573x1167, inner screen at L5.93% R5.76% T8.14% B2.83%).
+ * Renders a wallpaper inside a transparent iPhone frame overlay.
+ * The wallpaper is rendered as a CSS background-image (not <img>) to
+ * dificultar long-press "Save Image" on iOS Safari and Chrome Android.
  */
 const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: PhoneMockupProps) => {
   return (
@@ -20,7 +21,7 @@ const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: Phone
       className={`relative w-full ${className}`}
       style={{ aspectRatio: "573 / 1167" }}
     >
-      {/* Screenshot — positioned exactly inside the frame's screen area */}
+      {/* Screenshot area — positioned exactly inside the frame's screen */}
       <div
         className="absolute overflow-hidden rounded-[12%/5.5%]"
         style={{
@@ -30,14 +31,21 @@ const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: Phone
           bottom: "2.83%",
         }}
       >
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          decoding="async"
+        {/* Wallpaper as background-image (long-press protection) */}
+        <div
+          role="img"
+          aria-label={alt}
           {...imgProps}
-          className={`w-full h-full object-cover ${imgProps?.className ?? ""}`}
+          className={`wallpaper-protected w-full h-full bg-cover bg-center pointer-events-none select-none ${imgProps?.className ?? ""}`}
+          style={{
+            backgroundImage: `url(${src})`,
+            WebkitTouchCallout: "none",
+            ...(imgProps?.style ?? {}),
+          }}
         />
+
+        {/* Transparent overlay to swallow long-press over the wallpaper area */}
+        <div className="absolute inset-0 z-10 wallpaper-protected" />
       </div>
 
       {/* iPhone frame overlay */}
@@ -47,11 +55,12 @@ const PhoneMockup = ({ src, alt, className = "", imgProps, topRightSlot }: Phone
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 w-full h-full pointer-events-none select-none"
+        draggable={false}
+        className="absolute inset-0 w-full h-full pointer-events-none select-none z-20"
       />
 
       {topRightSlot && (
-        <div className="absolute top-2 right-2 z-10">{topRightSlot}</div>
+        <div className="absolute top-2 right-2 z-30">{topRightSlot}</div>
       )}
     </div>
   );
