@@ -81,11 +81,9 @@ const ColorGroupSlider = ({ colorGroup, pageUrl = "" }: ColorGroupSliderProps) =
                   src={image.src}
                   alt={image.alt}
                   imgProps={{
-                    width: 208,
-                    height: 370,
                     "data-pin-description": pinDescription,
                     "data-pin-media": pinMedia,
-                  } as React.ImgHTMLAttributes<HTMLImageElement>}
+                  }}
                   topRightSlot={
                     <a
                       href={getPinUrl(image.src, pinDescription)}
