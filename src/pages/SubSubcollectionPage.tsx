@@ -39,6 +39,34 @@ const SubSubcollectionPage = () => {
   }
 
   const totalImages = subsub.colorGroups.reduce((sum, cg) => sum + cg.images.length, 0);
+
+  // Find parent subcollection + collection for related/other sections
+  let parentSub: Subcollection | undefined;
+  let parentCollectionSubs: Subcollection[] = [];
+  for (const col of collections) {
+    for (const s of col.subcollections) {
+      if (s.subsubcollections.some((ss) => ss.id === subsub.id)) {
+        parentSub = s;
+        parentCollectionSubs = col.subcollections;
+        break;
+      }
+    }
+    if (parentSub) break;
+  }
+
+  const relatedSubsubs: SubSubcollection[] = (parentSub?.subsubcollections || []).filter(
+    (ss) => ss.id !== subsub.id,
+  );
+  const otherSubcollections: Subcollection[] = parentCollectionSubs.filter(
+    (s) => s.id !== parentSub?.id,
+  );
+
+  const getSubsubPreviews = (ss: SubSubcollection): string[] =>
+    ss.colorGroups.flatMap((cg) => cg.images.map((i) => i.src));
+
+  const getSubcollectionPreviews = (s: Subcollection): string[] =>
+    s.subsubcollections.flatMap(getSubsubPreviews);
+
   const pageTitle = `${subsub.title} Wallpapers (HD & 4K) – Free Download`;
   const pageDescription = `Explore our ${subsub.title.toLowerCase()} wallpapers in HD and 4K resolution. These aesthetic wallpapers are perfect for iPhone, Android and desktop screens. Download them for free and give your device a clean minimal look. ${totalImages} high quality wallpapers available.`;
   const pageUrl = `${DOMAIN}/collection/${subsub.slug}`;
