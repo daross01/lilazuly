@@ -138,6 +138,50 @@ const SubSubcollectionPage = () => {
           </div>
         </section>
 
+        {/* Related Wallpapers */}
+        {relatedSubsubs.length > 0 && (
+          <section className="py-12 border-t border-border">
+            <div className="container">
+              <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">Related Wallpapers</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {relatedSubsubs.slice(0, 4).map((ss) => (
+                  <CollectionCard
+                    key={ss.id}
+                    slug={ss.slug}
+                    title={ss.title}
+                    subtitle={`${ss.colorGroups.reduce((n, cg) => n + cg.images.length, 0)} wallpapers`}
+                    previewImages={getSubsubPreviews(ss)}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Explore Other Collections */}
+        {otherSubcollections.length > 0 && (
+          <section className="py-12 border-t border-border">
+            <div className="container">
+              <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">Explore Other Collections</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {otherSubcollections.map((s) => {
+                  const first = s.subsubcollections[0];
+                  if (!first) return null;
+                  return (
+                    <CollectionCard
+                      key={s.id}
+                      slug={first.slug}
+                      title={s.title}
+                      subtitle={`${s.subsubcollections.length} collection${s.subsubcollections.length > 1 ? "s" : ""}`}
+                      previewImages={getSubcollectionPreviews(s)}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Ad slot bottom */}
         <div className="container py-4">
           <AdSlot location="collection-bottom" />
