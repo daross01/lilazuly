@@ -7,7 +7,8 @@ import ColorGroupSlider from "@/components/ColorGroupSlider";
 import SocialShareButtons from "@/components/SocialShareButtons";
 import AdSlot from "@/components/AdSlot";
 import { Button } from "@/components/ui/button";
-import { getSubSubcollectionBySlug } from "@/data/collections";
+import CollectionCard from "@/components/CollectionCard";
+import { collections, getSubSubcollectionBySlug, type SubSubcollection, type Subcollection } from "@/data/collections";
 
 const DOMAIN = "https://lilazuly.vercel.app";
 
