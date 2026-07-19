@@ -42,7 +42,7 @@ const Index = () => {
                         <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2">
                           {subsub.colorGroups.map((colorGroup) => (
                             <div key={colorGroup.id} className="flex-shrink-0 w-44 md:w-48 snap-start">
-                              <Link to={`/collection/${subsub.slug}#${colorGroup.anchorId}`}>
+                              <Link to={colorGroup.url} onClick={() => window.scrollTo(0, 0)}>
                                 <ColorGroupCard colorGroup={colorGroup} />
                               </Link>
                             </div>

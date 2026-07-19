@@ -2,37 +2,127 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lilazuly.vercel.app/</loc>
-    <lastmod>2026-03-18</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lilazuly.vercel.app/privacy</loc>
-    <lastmod>2026-03-18</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://lilazuly.vercel.app/terms</loc>
-    <lastmod>2026-03-18</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://lilazuly.vercel.app/collection/ballon-initial-gradient</loc>
-    <lastmod>2026-03-18</lastmod>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/basic/blue</loc>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lilazuly.vercel.app/collection/ballon-initial-solid</loc>
-    <lastmod>2026-03-18</lastmod>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/basic/green</loc>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lilazuly.vercel.app/collection/ballon-initial-white</loc>
-    <lastmod>2026-03-18</lastmod>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/basic/lila</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/basic/pink</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/basic/red</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/basic/yellow</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/color-pop/blue</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/color-pop/green</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/color-pop/lila</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/color-pop/pink</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/color-pop/red</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/color-pop/yellow</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/whitely-pop/blue</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/whitely-pop/green</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/whitely-pop/lila</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/whitely-pop/pink</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/whitely-pop/red</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lilazuly.vercel.app/collections/ballon-initial/whitely-pop/yellow</loc>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

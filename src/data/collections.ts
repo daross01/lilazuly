@@ -43,18 +43,22 @@ export interface WallpaperImage {
 /** A color group (e.g. "blue") with its wallpaper images */
 export interface ColorGroup {
   id: string;
+  slug: string;         // e.g. "blue"
   anchorId: string;
   title: string;
+  url: string;          // /collections/{collection}/{subcategory}/{color}
   images: WallpaperImage[];
 }
 
-/** A sub-subcollection (e.g. "color_pop") containing 6 color groups */
+/** A sub-subcollection (e.g. "basic") — used as the "subcategory" in URLs */
 export interface SubSubcollection {
   id: string;
-  slug: string;
+  slug: string;               // legacy full slug e.g. "ballon-initial-basic"
+  subcategorySlug: string;    // short slug e.g. "basic"
   anchorId: string;
   title: string;
   collectionTitle: string;
+  collectionSlug: string;
   colorGroups: ColorGroup[];
   downloadLink: string;
 }
@@ -131,6 +135,10 @@ function buildData() {
 
           const colorId = `${toSlug(colName)}-${toSlug(subName)}-${toSlug(subSubName)}-${toSlug(colorName)}`;
 
+          const colorSlug = toSlug(colorName);
+          const collectionSlugLocal = toSlug(colName);
+          const subcategorySlugLocal = toSlug(subSubName);
+
           const wallpaperImages = imgs.map((img, i) => ({
             id: `${colorId}-${i}`,
             src: img.src,
@@ -141,8 +149,10 @@ function buildData() {
 
           colorGroups.push({
             id: colorId,
+            slug: colorSlug,
             anchorId: `${toSlug(subSubName)}-${toSlug(colorName)}`,
             title: formatTitle(colorName),
+            url: `/collections/${collectionSlugLocal}/${subcategorySlugLocal}/${colorSlug}`,
             images: wallpaperImages,
           });
         }
@@ -151,9 +161,11 @@ function buildData() {
         subsubcollections.push({
           id: `${toSlug(colName)}-${toSlug(subName)}-${toSlug(subSubName)}`,
           slug: subsubSlug,
+          subcategorySlug: toSlug(subSubName),
           anchorId: `${toSlug(subName)}-${toSlug(subSubName)}`,
           title: formatTitle(subSubName),
           collectionTitle: formatTitle(colName),
+          collectionSlug: toSlug(colName),
           colorGroups,
           downloadLink: "https://daross.gumroad.com/l/glow-wallpapers-all-collections",
         });
@@ -199,4 +211,44 @@ export const getSubSubcollectionBySlug = (slug: string): SubSubcollection | unde
     }
   }
   return undefined;
+};
+
+export interface ColorPageContext {
+  collection: Collection;
+  subcollection: Subcollection;
+  subsubcollection: SubSubcollection;
+  colorGroup: ColorGroup;
+}
+
+/** Look up a color page by URL params: /collections/{collection}/{subcategory}/{color} */
+export const getColorPage = (
+  collectionSlug: string,
+  subcategorySlug: string,
+  colorSlug: string,
+): ColorPageContext | undefined => {
+  const collection = collections.find((c) => c.slug === collectionSlug);
+  if (!collection) return undefined;
+  for (const sub of collection.subcollections) {
+    for (const subsub of sub.subsubcollections) {
+      if (subsub.subcategorySlug !== subcategorySlug) continue;
+      const cg = subsub.colorGroups.find((g) => g.slug === colorSlug);
+      if (cg) return { collection, subcollection: sub, subsubcollection: subsub, colorGroup: cg };
+    }
+  }
+  return undefined;
+};
+
+/** All color pages — useful for sitemap / listings */
+export const getAllColorPages = (): ColorPageContext[] => {
+  const out: ColorPageContext[] = [];
+  for (const collection of collections) {
+    for (const subcollection of collection.subcollections) {
+      for (const subsubcollection of subcollection.subsubcollections) {
+        for (const colorGroup of subsubcollection.colorGroups) {
+          out.push({ collection, subcollection, subsubcollection, colorGroup });
+        }
+      }
+    }
+  }
+  return out;
 };
