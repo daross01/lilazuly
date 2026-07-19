@@ -45,16 +45,49 @@ const colorMoods: Record<string, { mood: string; palette: string; vibe: string }
   yellow: { mood: "sunlit and optimistic",    palette: "butter, honey and afternoon gold",    vibe: "bright" },
 };
 
-function pickImages(ctx: ColorPageContext, n: number): { src: string; alt: string }[] {
-  const imgs = ctx.colorGroup.images;
-  if (imgs.length === 0) return [];
-  const out: { src: string; alt: string }[] = [];
-  const step = Math.max(1, Math.floor(imgs.length / (n + 1)));
-  for (let i = 0; i < n; i++) {
-    const img = imgs[Math.min(imgs.length - 1, (i + 1) * step - 1)];
-    out.push({ src: img.src, alt: img.alt });
-  }
-  return out;
+const sectionTemplates = [
+  (color: string, mood: { mood: string; palette: string; vibe: string }) =>
+    `This one leans into the ${mood.vibe} side of ${color.toLowerCase()} — the kind of background that ` +
+    `disappears into the rest of your screen and lets your apps breathe. Set it as a lock screen for a week ` +
+    `and see how quickly it starts to feel like yours.`,
+  (color: string, mood: { mood: string; palette: string; vibe: string }) =>
+    `Built around ${mood.palette}, this wallpaper is ${mood.mood} without ever tipping into loud. ` +
+    `It reads beautifully on OLED and holds its tone under both light and dark system themes.`,
+  (color: string) =>
+    `A softer take on ${color.toLowerCase()} — closer to a mood than a statement. Pair it with a minimal ` +
+    `home screen and monochrome widgets to let the palette do the talking.`,
+  (color: string, mood: { mood: string; palette: string; vibe: string }) =>
+    `There is a slow, ${mood.vibe} quality to this frame. The composition leaves room around the clock and ` +
+    `notifications, so nothing important gets swallowed by the image.`,
+  (color: string) =>
+    `If you like your ${color.toLowerCase()} with a little more depth, this is the one. Rich in the shadows, ` +
+    `soft in the highlights, and calibrated so gradients stay clean at 4K.`,
+  (color: string, mood: { mood: string; palette: string; vibe: string }) =>
+    `A quieter member of the set. The ${mood.palette} palette keeps things cohesive with the rest of the ` +
+    `collection while still offering its own little atmosphere.`,
+  (color: string) =>
+    `Almost editorial in feel. Works especially well as a home screen when paired with a lock screen from ` +
+    `earlier in this ${color.toLowerCase()} edit — the two hand off nicely.`,
+  (color: string, mood: { mood: string; palette: string; vibe: string }) =>
+    `${mood.vibe.charAt(0).toUpperCase() + mood.vibe.slice(1)} and unhurried. This wallpaper is a good ` +
+    `pick for the days when you want your phone to feel a little less busy.`,
+  (color: string) =>
+    `A punchier ${color.toLowerCase()} moment. Still tonal, still restrained, but with a bit more presence ` +
+    `for when you want the background to be noticed.`,
+  (color: string, mood: { mood: string; palette: string; vibe: string }) =>
+    `Textural and calm. The kind of ${color.toLowerCase()} wallpaper you set once and forget you set — ` +
+    `until someone glances at your phone and asks where it is from.`,
+];
+
+function buildImageSections(
+  ctx: ColorPageContext,
+  mood: { mood: string; palette: string; vibe: string },
+  colorName: string,
+): ArticleSection[] {
+  return ctx.colorGroup.images.map((img, i) => ({
+    image: { src: img.src, alt: img.alt },
+    body: sectionTemplates[i % sectionTemplates.length](colorName, mood),
+  }));
 }
 
 export function buildArticleContent(ctx: ColorPageContext): ArticleContent {
@@ -80,41 +113,7 @@ export function buildArticleContent(ctx: ColorPageContext): ArticleContent {
     `wallpapers designed to feel ${mood.mood} the moment you unlock your phone. It is not a gallery — ` +
     `it is a small mood board you can carry around.`;
 
-  const [img1, img2, img3, img4] = pickImages(ctx, 4);
-
-  const sections: ArticleSection[] = [];
-  if (img1) sections.push({
-    heading: "The palette",
-    image: img1,
-    body:
-      `Every wallpaper in this set is tuned to the same tonal family: ${mood.palette}. ` +
-      `That consistency is what makes them work together — you can switch backgrounds ` +
-      `across the week without breaking the atmosphere of your home screen.`,
-  });
-  if (img2) sections.push({
-    heading: "Why it works",
-    image: img2,
-    body:
-      `${colorName} sits somewhere between statement and neutral. Paired with the ${subcategoryName.toLowerCase()} ` +
-      `treatment used throughout ${collectionName}, the result is soft enough for everyday use and ` +
-      `sharp enough to feel intentional. Icons stay readable, widgets stay legible, mood stays ${mood.vibe}.`,
-  });
-  if (img3) sections.push({
-    heading: "How to style it",
-    image: img3,
-    body:
-      `Try one of these as a lock screen and pair it with a plain home screen in the same family — ` +
-      `light or dark depending on the hour. If you use widgets, keep them monochrome; the ${colorName.toLowerCase()} ` +
-      `does the talking. The whole set is optimised for HD and 4K displays across iPhone and Android.`,
-  });
-  if (img4) sections.push({
-    heading: "On the device",
-    image: img4,
-    body:
-      `Downloaded at full resolution, these wallpapers hold up beautifully on modern OLED screens. ` +
-      `Blacks stay deep, ${colorName.toLowerCase()} stays true, and there is no visible banding in the ` +
-      `gradients. Save your favourites, rotate them weekly, and let the palette do its slow work.`,
-  });
+  const sections: ArticleSection[] = buildImageSections(ctx, mood, colorName);
 
   const conclusion =
     `That is the ${colorName} chapter of ${subcategoryName} — ${count} wallpapers, one coherent mood. ` +

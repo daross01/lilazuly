@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
@@ -14,6 +15,18 @@ const DOMAIN = "https://lilazuly.vercel.app";
 const Index = () => {
   // Use the first (and currently only) collection
   const collection = collections[0];
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    // Defer until content is rendered.
+    const t = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [location.hash]);
 
   return (
     <div className="min-h-screen flex flex-col">

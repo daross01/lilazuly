@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import ImageModal from "@/components/ImageModal";
 import SocialShareButtons from "@/components/SocialShareButtons";
 import { getColorPage } from "@/data/collections";
+import { collections, type ColorGroup } from "@/data/collections";
+import ColorGroupCard from "@/components/ColorGroupCard";
 import { buildArticleContent } from "@/data/collectionContent";
 
 const DOMAIN = "https://lilazuly.vercel.app";
@@ -25,6 +27,35 @@ const CollectionArticlePage = () => {
 
   const { collection, subsubcollection, colorGroup } = ctx;
   const article = buildArticleContent(ctx);
+
+  // Related: sibling color groups in the same subsubcollection (excluding current).
+  const relatedGroups = subsubcollection.colorGroups.filter((g) => g.id !== colorGroup.id);
+
+  // Explore: top-level subcollections from the Home (all of them, excluding current subcollection).
+  // Reuse ColorGroupCard by synthesizing a ColorGroup-like object per subcollection.
+  const homeCollection = collections[0];
+  const exploreItems: { key: string; card: ColorGroup; href: string }[] = [];
+  if (homeCollection) {
+    for (const sub of homeCollection.subcollections) {
+      const allImages = sub.subsubcollections.flatMap((ss) =>
+        ss.colorGroups.flatMap((cg) => cg.images)
+      );
+      if (allImages.length === 0) continue;
+      exploreItems.push({
+        key: sub.id,
+        card: {
+          id: sub.id,
+          slug: sub.anchorId,
+          anchorId: sub.anchorId,
+          title: sub.title,
+          url: `/#${sub.anchorId}`,
+          images: allImages,
+        },
+        href: `/#${sub.anchorId}`,
+      });
+    }
+  }
+
   const pageUrl = `${DOMAIN}${colorGroup.url}`;
   const ogImage = colorGroup.images[0]
     ? (colorGroup.images[0].src.startsWith("http") ? colorGroup.images[0].src : `${DOMAIN}${colorGroup.images[0].src}`)
@@ -101,26 +132,26 @@ const CollectionArticlePage = () => {
             {article.intro}
           </p>
 
-          {/* Sections: image + body */}
-          <div className="mt-12 md:mt-16 space-y-14 md:space-y-20">
+          {/* Sections: one per wallpaper, same pattern throughout */}
+          <div className="mt-16 md:mt-24 space-y-20 md:space-y-28">
             {article.sections.map((section, i) => (
-              <section key={i}>
-                <figure className="mb-6 md:mb-8">
-                  <div className="overflow-hidden rounded-2xl bg-secondary">
+              <section key={i} className="flex flex-col items-center text-center">
+                <figure className="mb-8 md:mb-10 w-full flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setModalImage({ src: section.image.src, alt: section.image.alt })}
+                    className="block w-[70%] md:w-[65%] max-w-[420px] overflow-hidden rounded-2xl bg-secondary shadow-card hover:shadow-card-hover transition-shadow"
+                    aria-label={`Preview ${section.image.alt}`}
+                  >
                     <img
                       src={section.image.src}
                       alt={section.image.alt}
                       loading={i === 0 ? "eager" : "lazy"}
                       className="w-full h-auto object-cover"
                     />
-                  </div>
+                  </button>
                 </figure>
-                {section.heading && (
-                  <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-4 tracking-tight">
-                    {section.heading}
-                  </h2>
-                )}
-                <p className="text-[17px] md:text-lg text-foreground/90 leading-[1.75]">
+                <p className="max-w-[560px] text-[17px] md:text-lg text-foreground/90 leading-[1.75]">
                   {section.body}
                 </p>
               </section>
@@ -144,35 +175,56 @@ const CollectionArticlePage = () => {
           </div>
         </article>
 
-        {/* Gallery */}
-        <section className="border-t border-border py-12 md:py-16">
-          <div className="mx-auto w-full max-w-[1100px] px-5 md:px-6">
-            <div className="mb-8 md:mb-10 text-center">
-              <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-                The gallery
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {colorGroup.images.length} wallpapers · tap to preview & download
-              </p>
+        {/* Related Wallpapers */}
+        {relatedGroups.length > 0 && (
+          <section className="border-t border-border py-14 md:py-20">
+            <div className="mx-auto w-full max-w-[1100px] px-5 md:px-6">
+              <div className="mb-8 md:mb-10">
+                <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+                  Related Wallpapers
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  More colors from the {subsubcollection.title} · {collection.title} set.
+                </p>
+              </div>
+              <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2">
+                {relatedGroups.map((g) => (
+                  <div key={g.id} className="flex-shrink-0 w-44 md:w-48 snap-start">
+                    <Link to={g.url} onClick={() => window.scrollTo(0, 0)}>
+                      <ColorGroupCard colorGroup={g} />
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {colorGroup.images.map((img) => (
-                <button
-                  key={img.id}
-                  onClick={() => setModalImage({ src: img.src, alt: img.alt })}
-                  className="group relative overflow-hidden rounded-xl bg-secondary aspect-[9/16]"
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
-                </button>
-              ))}
+          </section>
+        )}
+
+        {/* Explore Other Collections */}
+        {exploreItems.length > 0 && (
+          <section className="border-t border-border py-14 md:py-20">
+            <div className="mx-auto w-full max-w-[1100px] px-5 md:px-6">
+              <div className="mb-8 md:mb-10">
+                <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+                  Explore Other Collections
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Jump back to the home and discover more curated collections.
+                </p>
+              </div>
+              <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2">
+                {exploreItems.map(({ key, card, href }) => (
+                  <div key={key} className="flex-shrink-0 w-44 md:w-48 snap-start">
+                    <Link to={href}>
+                      <ColorGroupCard colorGroup={card} />
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
       </main>
 
       <Footer />
